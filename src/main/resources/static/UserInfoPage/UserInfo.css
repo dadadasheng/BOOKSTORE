@@ -1,0 +1,349 @@
+html{
+    margin: 0;
+    padding: 0;
+    height: 775px;
+    min-width: 900px;
+}
+body{
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-rows: repeat(14,1fr);
+    grid-template-columns:  repeat(14,1fr);
+    background: #17181a;
+}
+#navigate{
+    grid-area: 1/1/1/15;
+    height: 70%;
+    /*background-color: rgba(64, 62, 62, 0.7);*/
+    background-color: black;
+    z-index: 999;
+}
+#title{
+    height: 60%;
+    background-color: transparent;
+}
+#logo{
+    margin-left: 3%;
+    height: 80%;
+}
+
+#container{
+    grid-area: 2/1/14/15;
+    display: grid;
+    grid-template-columns: repeat(15,1fr);
+    grid-template-rows: repeat(11,1fr);
+    background-image: url("img/书架.svg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: #17181a;
+    /*margin-top: -32px;*/
+}
+#UserInfoContainer{
+    grid-area: 1/3/12/13;
+    display: grid;
+    min-width: 750px;
+    grid-template-columns: 200px 550px;
+    grid-template-rows: repeat(9,1fr);
+    background: rgba(12, 2, 2, 0.56);
+    box-shadow: -1px 4px 28px 0px rgb(250, 250, 250);
+    border-radius: 5px;
+    z-index: 999;
+}
+#btn_container{
+    grid-area: 1/1/10/2;
+    display: grid;
+    grid-template-rows: repeat(9,1fr);
+}
+#UserImage{
+    grid-area: 1/1/4/1;
+    margin: 5px;
+    border-style: solid;
+    border-color: #0c61de;
+    border-width: 2px;
+    border-radius: 50px;
+    background-color: white;
+    background-image: url("img/读书人头.svg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+h6{
+    line-height: 100%;
+    color: white;
+}
+.btn{
+    text-align: center;
+    border-bottom-style: solid;
+    border-color: #585757;
+    border-bottom-width: 1px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.btn:hover{
+    cursor: pointer;
+    background: #484747;
+}
+#AccountInfo{
+    grid-area: 4/1/5/1;
+}
+#Reading{
+    grid-area: 5/1/6/1;
+}
+#Book{
+    grid-area: 6/1/7/1;
+}
+#Info{
+    grid-area: 7/1/8/1;
+}
+#Content{
+    grid-area: 1/2/10/3;
+    display: grid;
+    grid-template-rows: repeat(1,1fr);
+    grid-template-columns: repeat(1,1fr);
+}
+
+#content1{
+    grid-area: 1/1;
+    display: grid;
+    grid-template-rows: 1fr 1fr 3fr;
+    color: white;
+}
+#nickname{
+    margin-top: 30px;
+    margin-left: 20px;
+    font-weight: 600;
+    font-family: 'Montserrat',sans-serif;
+}
+#words{
+    margin-left: 20px;
+    border-bottom-style: solid;
+    border-color: #f8f6f6;
+    border-bottom-width: 1px;
+    font-family: 'Poppins',sans-serif;
+}
+li{
+    list-style: none;
+    margin-bottom: 20px;
+}
+#phone{
+
+}
+#gender{
+
+}
+#age{
+
+}
+#birthday{
+
+}
+
+#content2{
+    grid-area: 1/1;
+    display: none;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(10,1fr);
+    overflow: hidden;
+    overflow-y: scroll;
+
+}
+#content2::-webkit-scrollbar{
+    display: none;
+}
+.content2_books{
+    display: grid;
+    grid-template-rows: repeat(7,1fr);
+    grid-template-columns: repeat(1,1fr);
+    height: 250px;
+}
+.del_btn{
+    display: none;
+    grid-row: 6/7;
+    justify-self: end;
+    height: 30px;
+}
+
+#content2_books1{
+    grid-row: 1;
+    grid-column: 1;
+}
+#content2_books2{
+    grid-row: 1;
+    grid-column: 2;
+}
+#content2_books3{
+    grid-row: 1;
+    grid-column: 3;
+}
+#content2_books4{
+    grid-row: 2;
+    grid-column: 1;
+}
+#content2_books5{
+    grid-row: 2;
+    grid-column: 2;
+}
+#content2_books6{
+    grid-row: 2;
+    grid-column: 3;
+}
+#content2_books7{
+    grid-row: 3;
+    grid-column: 1;
+}
+#content2_books8{
+    grid-row: 3;
+    grid-column: 2;
+}
+#content2_books9{
+    grid-row: 3;
+    grid-column: 3;
+}
+.content2_books_1{
+    grid-row: 1/6;
+    grid-column: 1;
+    margin: auto;
+    height: 160px;
+}
+.content2_books_2{
+    grid-row: 6;
+    grid-column: 1;
+    text-align: center;
+    color: white;
+}
+#content3{
+    grid-area: 1/1;
+    display: none;
+    grid-template-rows: repeat(9,1fr);
+}
+#field6{
+    grid-row: 4;
+    border-bottom-style: solid;
+    border-color: #585757;
+    border-bottom-width: 1px;
+}
+#field7{
+    grid-row: 5;
+    border-bottom-style: solid;
+    border-color: #585757;
+    border-bottom-width: 1px;
+}
+#field8{
+    grid-row: 8;
+    width: 180px;
+    justify-self: end;
+}
+.password::-ms-reveal {
+    display: none;
+}
+.show{
+    position: absolute;
+    right: 13px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #222;
+    cursor:pointer;
+    display: none;
+    font-family: 'Montserrat',sans-serif;
+}
+.password:valid ~ .show{
+    display: block;
+}
+#content4{
+    grid-area: 1/1;
+    display: none;
+    grid-template-rows: repeat(9,1fr);
+}
+#field1{
+    grid-row: 3;
+    border-bottom-style: solid;
+    border-color: #585757;
+    border-bottom-width: 1px;
+}
+#field2{
+    grid-row: 4;
+    border-bottom-style: solid;
+    border-color: #585757;
+    border-bottom-width: 1px;
+}
+#field3{
+    grid-row: 5;
+    border-bottom-style: solid;
+    border-color: #585757;
+    border-bottom-width: 1px;
+}
+#field4{
+    grid-row: 6;
+    border-bottom-style: solid;
+    border-color: #585757;
+    border-bottom-width: 1px;
+}
+#field5{
+    grid-row: 8;
+    width: 180px;
+    justify-self: end;
+}
+.field{
+    background: transparent;
+    position: relative;
+    height: 45px;
+    width: 300px;
+    display: flex;
+    margin-left: 150px;
+}
+.field span{
+    color: #222;
+    width: 40px;
+    line-height: 45px;
+}
+.field input{
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 16px;
+    font-family: 'Poppins',sans-serif;
+}
+.space{
+    margin-top: 16px;
+}
+.gender{
+    color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: lighter;
+}
+input[type="radio"]{
+    color: #222;
+    width: 20px;
+    line-height: 45px;
+}
+input[type="radio"]:checked{
+    background: #2691d9;
+}
+input[type="submit"]{
+    background: rgba(255,255,255,0.04);
+    box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
+    border: 1px solid #484747;
+    color: white;
+    font-size: 18px;
+    font-weight: lighter;
+    font-family: 'Montserrat',sans-serif;
+    border-radius: 10px;
+    letter-spacing: 1px;
+    cursor:pointer;
+}
+input[type="submit"]:hover{
+    background: #484747;
+}
+
+#footer{
+    margin-top: 1px;
+    z-index: 999;
+    grid-area: 14/1/15/15;
+    /*background-color: rgba(64, 62, 62, 0.7);*/
+    background-color: black;
+}

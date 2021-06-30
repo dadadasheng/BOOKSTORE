@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图书详情</title>
+    <link rel="stylesheet" href="BookInfoPage.css">
+</head>
+<body>
+    <script type="text/javascript" src="../JavaScriptTool/jquery-3.6.0.js"></script>
+    <div id="navigate">
+        <img id="logo" src="img/红灯泡.svg">
+        <img id="title" src="img/明学书城标题logo2.png">
+    </div>
+    <div id="container">
+        <div id="UserInfoContainer">
+            <img id="book1" >
+            <h1 id="bookName"></h1>
+            <div id="btn_bookstore">
+                <img id="btn_add_image" src="img/bookIcon.svg">
+                <span id="add_title">加入书架</span>
+            </div>
+            <div id="btn_read">
+                <img id="btn_read1" src="img/bookIcon.svg">
+                <span id="read_btn">阅读</span>
+            </div>
+
+            <h3 id="author"></h3>
+            <div id="ranking"></div>
+            <img id="love" src="img/爱心（空心）.svg">
+            <div id="introduction">
+                <p id="introductionText">
+                </p>
+            </div>
+            <div id="more">
+                <p>更多</p>
+            </div>
+            <div id="border"></div>
+            <div id="label_RelatedBook">图书推荐</div>
+            <div id="recommend">
+                <div class="recommendBook">
+                    <img class="recommendBookImg" >
+                    <p class="recommendBookName"></p>
+                </div>
+                <div class="recommendBook">
+                    <img class="recommendBookImg" >
+                    <p class="recommendBookName"></p>
+                </div>
+                <div class="recommendBook">
+                    <img class="recommendBookImg" >
+                    <p class="recommendBookName"></p>
+                </div>
+                <div class="recommendBook">
+                    <img class="recommendBookImg" >
+                    <p class="recommendBookName"></p>
+                </div>
+            </div>
+            <div id="label_BookReview">书评</div>
+            <div id="BookReview">
+
+            </div>
+            <div id="Saying">
+                <form>
+                    <textarea id="comment" name="comment" placeholder="快来评价一下吧！"></textarea>
+                </form>
+            </div>
+            <div id="btn_conservation">
+                <input id="submitBtn" type="button" value="发送">
+            </div>
+            <div id="detailPage">
+                <h3 id="introduce">简介</h3>
+                <div id="deleteIcon">
+                    <img id="bookImage" src="img/delete2.svg">
+                </div>
+                <p id="details">
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    <script>
+        let more=document.getElementById("more");
+        let bookName=document.getElementById("bookName");
+        let author=document.getElementById("author");
+        let detailPage=document.getElementById("detailPage");
+        let deleteIcon=document.getElementById("deleteIcon");
+        let bookImage = document.getElementById("book1");
+        let introductionText = document.getElementById("introductionText");
+        let details = document.getElementById("details");
+        let ranking=document.getElementById("ranking");
+        let BookId = window.localStorage.getItem('BookId');
+        if(BookId===null){
+            BookId = window.localStorage.getItem('oldBookId')
+        }
+        more.onclick=function (){
+            detailPage.style.display="grid"
+        }
+        deleteIcon.onclick=function (){
+            detailPage.style.display="none"
+        }
+        $.ajax({
+            url:"http://127.0.0.1:8080/getBookById",
+            type:"get",
+            data: {"bookId":BookId},
+            dataType:"json",
+            success: function(data) {
+                window.localStorage.removeItem('BookId')
+                if(data!=null){
+                    bookImage.setAttribute("src","data:image/png;base64,"+data['picture'])
+                    details.innerText = data['introduction']
+                    introductionText.innerText= data['introduction']
+                    author.innerText = data['author']
+                    bookName.innerText = data['bookName']
+                    bookName.value = data['bookId']
+                    ranking.innerHTML = data['likeNum']
+                }else {
+                    alert("请骚等")
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(" error")
+            }
+        })
+        window.onunload = function () {
+            window.localStorage.setItem('oldBookId',bookName.value)
+        }
+    </script>
+    <script type="text/javascript">
+        var recommendBooks =document.getElementsByClassName("recommendBook")
+        var recommendBookImages = document.getElementsByClassName("recommendBookImg")
+        var recommendBookNames = document.getElementsByClassName("recommendBookName")
+        $.ajax({
+            url:"http://127.0.0.1:8080/getRecommendBookById",
+            type:"get",
+            data:{"bookId":BookId},
+            dataType:"json",
+            success:function (data) {
+                for (var i=0;i<data.length;i++){
+                    recommendBookImages.item(i).setAttribute("src","data:image/png;base64,"+data[i]['picture'])
+                    recommendBookNames.item(i).innerHTML = data[i]['bookName']
+                    recommendBooks.item(i).onclick = Function(
+                        "window.localStorage.setItem('BookId',"+data[i]['bookId']+")\n" +
+                        "window.open('../BookInfoPage/BookInfoPage.html')"
+                    )
+
+                }
+            }
+        })
+    </script>
+    <script type="text/javascript">
+        var BookReview = document.getElementById("BookReview")
+        var BookReview_contents = document.getElementsByClassName("BookReview_content")
+        var likeImgs = document.getElementsByClassName("likeImg");
+        var likeNums = document.getElementsByClassName("likeNum");
+        var delCommentBtns = document.getElementsByClassName('delCommentBtn');
+        function clickLike(item,commentId,num) {
+            if(!item.value)
+            {item.setAttribute("src","img/亮点赞.svg");item.value = true;
+            $.ajax({
+                url:"http://127.0.0.1:8080/likeComment",
+                data:{
+                    "bookId":BookId,
+                    "commentId":commentId,
+                    "token":window.localStorage.getItem('token')
+                },
+                success:function () {
+                    likeNums.item(num).innerHTML = (parseInt(likeNums.item(num).innerHTML)+1)+""
+                }
+            })
+            }
+            else{item.setAttribute("src","img/点赞 2.svg");item.value = false;
+                $.ajax({
+                    url:"http://127.0.0.1:8080/cancelLikeComment",
+                    data:{
+                        "bookId":BookId,
+                        "commentId":commentId,
+                        "token":window.localStorage.getItem('token')
+                    },
+                    success:function () {
+                        likeNums.item(num).innerHTML = (parseInt(likeNums.item(num).innerHTML)-1)+""
+                    }
+                })}
+
+        }
+        function checkLikeComment(){};
+        function delComment(commentId,num) {
+            $.ajax({
+                url:"http://127.0.0.1:8080/delCommentByPhone",
+                data:{
+                    'token':window.localStorage.getItem('token'),
+                    'bookId':BookId,
+                    'commentId':commentId
+                },
+                success:function () {
+                    BookReview_contents.item(num).style.display="none";
+                }
+            })
+        }
+        function checkCommentOfUser(commentId,items,num) {
+            $.ajax({
+                url:"http://127.0.0.1:8080/isCommentOfUser",
+                data:{
+                    'bookId':BookId,
+                    'commentId':commentId,
+                    'token':window.localStorage.getItem('token')
+                },
+                success:function (data) {
+                    if(data) {
+                        items.item(num).innerHTML = "删除"
+                        items.item(num).onclick =Function("delComment("+commentId+","+num+");")
+                    }
+                }
+            })
+        }
+        function isLike(item,commentId){
+            $.ajax({
+                url:"http://127.0.0.1:8080/isLikeComment",
+                data:{
+                    "bookId":BookId,
+                    "commentId":commentId,
+                    "token":window.localStorage.getItem('token')
+                },
+                success:function (data) {
+                },
+                error(){
+                  alert("获取数据失败")
+                }
+            })
+        }
+        function loadComment() {
+            $.ajax({
+                url:"http://127.0.0.1:8080/getComment",
+                type:"get",
+                data:{"bookId":BookId},
+                dataType:"json",
+                success:function (data) {
+                    BookReview.innerHTML = ""
+                    for (var num=0;num<data.length;num++) {
+                        BookReview.innerHTML = BookReview.innerHTML +
+                            "<div class=\"BookReview_content\" >\n" +
+                            "                    <div class=\"reader\">" +
+                            data[num]['name'] +
+                            "</div>\n" +
+                            "                    <div class=\"date\">" +
+                            data[num]['publishDate']+
+                            "</div>\n" +
+                            "<img class=\"likeImg\" src=\"img/点赞 2.svg\">"+
+                            "<p class=\"likeNum\">" +data[num]['likeNum']+
+                            "</p>"+
+                            "                    <div class=\"comment\">\n" +
+                            "                        <p>\n" +
+                            data[num]['comment']+
+                            "                        </p>\n" +
+                            "                    </div>\n" +
+                            "<p class='delCommentBtn'></p>\n"+
+                            "                </div>";
+                        checkLikeComment = Function(
+                            "$.ajax({"+
+                                "url:\"http://127.0.0.1:8080/isLikeComment\","+
+                                "data:{"+
+                                    "\"bookId\":BookId,"+
+                                    "\"commentId\":"+data[num]['commentId']+","+
+                                    "\"token\":window.localStorage.getItem('token')"+
+                               " },"+
+                                "success:function (data) {"+
+                                    "if (!data){"+
+                                        "likeImgs.item("+num+").setAttribute(\"src\",\"img/点赞 2.svg\"); likeImgs.item("+num+").value = false;"+
+                                    "}else {"+
+                                       " likeImgs.item("+num+").setAttribute(\"src\",\"img/亮点赞.svg\"); likeImgs.item("+num+").value = true;"+
+                                  "  }"+
+                               " },"+
+                                "error(){"+
+                                   " alert(\"获取数据失败\")"+
+                               " }"+
+                           " })"
+                        )
+                        checkCommentOfUser(data[num]['commentId'],delCommentBtns,num)
+                        checkLikeComment();
+
+                    }
+
+                    for(var i=0;i<likeImgs.length;i++) {
+                        likeImgs.item(i).onclick =
+                            Function(
+                            "clickLike(likeImgs.item("+i+"),"+data[i]['commentId']+","+i+");"
+                        )
+                    }
+
+                }
+            })
+        }
+        loadComment()
+    </script>
+    <script type="text/javascript">
+        var BookReview = document.getElementById("BookReview")
+        var submitBtn = document.getElementById("submitBtn")
+        var comment = document.getElementById("comment")
+        submitBtn.onclick = function () {
+            $.ajax({
+                url:"http://127.0.0.1:8080/submitComment",
+                type:"post",
+                data:{
+                    "token":window.localStorage.getItem('token'),
+                    "bookId":BookId,
+                    "comment":comment.value
+                },
+                success:function (data) {
+                    loadComment()
+                    comment.value = ""
+                }
+            })
+        }
+    </script>
+    <script type="text/javascript">
+        let X=true
+        let love=document.getElementById("love");
+        function addLikeBook() {
+            $.ajax({
+                url:"http://127.0.0.1:8080/addLikeNumById",
+                data:{
+                    'bookId':BookId,
+                    'token':window.localStorage.getItem('token')
+                },
+                success:function (data) {
+                }
+            })
+        }
+        function subLikeBook() {
+            $.ajax({
+                url:"http://127.0.0.1:8080/subLikeNumById",
+                data:{
+                    'bookId':BookId,
+                    'token':window.localStorage.getItem('token')
+                },
+                success:function (data) {
+
+                }
+            })
+        }
+        function isLike() {
+            $.ajax({
+                url:"http://127.0.0.1:8080/isLike",
+                type:"get",
+                data:{
+                    'bookId':BookId,
+                    'token':window.localStorage.getItem('token')
+                },
+                success:function (data) {
+                    if (data){
+                        love.src="img/爱心（实心）.svg";
+                        X=false;
+                    }else {
+                        X=true;
+                    }
+                }
+            })
+        }
+        love.onclick=function (){
+            let num =ranking.innerHTML
+            if(X){
+                love.src="img/爱心（实心）.svg";
+                ranking.innerHTML=(parseInt(num)+1)+"";
+                addLikeBook()
+                X=false;
+            }else {
+                love.src="img/爱心（空心）.svg"
+                ranking.innerHTML=(parseInt(num)-1)+"";
+                subLikeBook();
+                X=true;
+            }
+        }
+        isLike();
+    </script>
+    <script type="text/javascript">
+        var add_btn = document.getElementById("btn_bookstore")
+        var btn_read = document.getElementById("btn_read")
+        $.ajax({
+            url:"http://127.0.0.1:8080/isInBookshelf",
+            data:{
+                'bookId':BookId,
+                'token':window.localStorage['token'],
+
+            },
+            success:function (data) {
+                if(data===true){
+                    add_btn.style.display='none'
+                    btn_read.style.display='block'
+                }
+            }
+        })
+        add_btn.onclick = function () {
+            add_btn.style.display='none'
+            btn_read.style.display='block'
+            $.ajax({
+                url:"http://127.0.0.1:8080/addToBookshelf",
+                data:{
+                    'token':window.localStorage['token'],
+                    'bookId':bookName.value
+                },
+                success:function (data) {
+                    if(data===true){
+                        alert("加入成功")
+                    }
+                }
+            })
+        }
+        btn_read.onclick = function () {
+            window.open("http://127.0.0.1:8080/preview1")
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>标签</title>
+    <link href="LabelPage.css" rel="stylesheet">
+</head>
+<body>
+    <script type="text/javascript" src="../JavaScriptTool/jquery-3.6.0.js"></script>
+    <div id="navigate">
+        <img id="logo" src="img/红灯泡.svg">
+        <img id="title" src="img/明学书城标题logo2.png">
+        <form>
+            <input type="text" id="search_text" name="search" >
+        </form>
+        <i id="searchIcon"></i>
+        <div id="navigate_content3" class="navigate_content">个人信息</div>
+        <div id="navigate_content2" class="navigate_content">注册 |</div>
+        <div id="navigate_content1" class="navigate_content">登录 |</div>
+    </div>
+    <div id="container">
+        <div id="InfoContainer">
+            <div id="label">
+                <div id="label_content1" class="label_content" value="文学">文学</div>
+                <div id="label_content2" class="label_content" value="流行">流行</div>
+                <div id="label_content3" class="label_content" value="文化">文化</div>
+                <div id="label_content4" class="label_content" value="生活">生活</div>
+                <div id="label_content5" class="label_content" value="经管">经管</div>
+                <div id="label_content6" class="label_content" value="科技">科技</div>
+                <div id="label_content7" class="label_content" value="历史">历史</div>
+                <div id="label_content8" class="label_content" value="计算机">计算机</div>
+                <div id="label_content10" class="label_content" value="艺术">艺术</div>
+                <div id="label_content11" class="label_content" value="军事">军事</div>
+                <div id="label_content12" class="label_content" value="政治">政治</div>
+            </div>
+            <div id="classification">
+
+            </div>
+            <div id="books"></div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    <script type="text/javascript">
+        setTag(window.localStorage.getItem('OpenTagType'))
+        var labels = document.getElementsByClassName("label_content")
+        var classification = document.getElementById("classification")
+        var tags = document.getElementsByClassName("classification_content_tag")
+        var bookRank = document.getElementById("books")
+        var books_contents = document.getElementsByClassName("books_content")
+        for(var i=0;i<labels.length;i++){
+            labels.item(i).onclick = Function("setTag(labels.item("+i+").innerHTML);")
+        }
+        function getBooksByTag(num){
+            $.ajax({
+                url:"http://127.0.0.1:8080/getBooksByTag",
+                data:{"tag":tags.item(num).innerHTML},
+                success:function (books) {
+                    bookRank.innerHTML = ""
+                    for (var i=0;i<books.length;i++){
+                        bookRank.innerHTML = bookRank.innerHTML +
+                            "                <div  class=\"books_content\">\n" +
+                            "                    <div class=\"number\">" +
+                            (i+1) +
+                            "</div>\n" +
+                            "                <img  src=" +
+                            "data:image/png;base64,"+books[i]['picture'] +
+                            ">\n" +
+                            "                    <div class=\"books_content_Info\">\n" +
+                            "                        <br>\n" +
+                            "                        <h2>" +
+                            books[i]['bookName'] +
+                            "</h2><br>\n" +
+                            "                        <div class=\"writer\">" +
+                            books[i]['author'] +
+                            "</div><br>\n" +
+                            "                        <div class=\"introduction\">\n" +
+                            "                            <p>\n" +
+                            books[i]['introduction'] +
+                            "                            </p>\n" +
+                            "                        </div>\n" +
+                            "                    </div>\n" +
+                            "                </div>"
+
+
+                    }
+                    for(var j=0;j<books.length;j++){
+                        books_contents.item(j).onclick =
+                            Function(
+                                "window.localStorage.setItem('BookId',"+books[j]['bookId']+");"+
+                                "window.open('../BookInfoPage/BookInfoPage.html')"
+                            )
+                    }
+                }
+            })
+        }
+        function initBooks(){
+            var tag = tags.item(0).innerHTML
+            if (tag!==null) {
+                $.ajax({
+                    url: "http://127.0.0.1:8080/getBooksByTag",
+                    data: {"tag": tag},
+                    success: function (books) {
+                        bookRank.innerHTML = ""
+                        for (var i = 0; i < books.length; i++) {
+                            bookRank.innerHTML = bookRank.innerHTML +
+                                "                <div  class=\"books_content\">\n" +
+                                "                    <div class=\"number\">" +
+                                (i + 1) +
+                                "</div>\n" +
+                                "                <img  src=" +
+                                "data:image/png;base64," + books[i]['picture'] +
+                                ">\n" +
+                                "                    <div class=\"books_content_Info\">\n" +
+                                "                        <br>\n" +
+                                "                        <h2>" +
+                                books[i]['bookName'] +
+                                "</h2><br>\n" +
+                                "                        <div class=\"writer\">" +
+                                books[i]['author'] +
+                                "</div><br>\n" +
+                                "                        <div class=\"introduction\">\n" +
+                                "                            <p>\n" +
+                                books[i]['introduction'] +
+                                "                            </p>\n" +
+                                "                        </div>\n" +
+                                "                    </div>\n" +
+                                "                </div>"
+                        }
+                        for (var j = 0; j < books.length; j++) {
+                            books_contents.item(j).onclick =
+                                Function(
+                                    "window.localStorage.setItem('BookId'," + books[j]['bookId'] + ");" +
+                                    "window.open('../BookInfoPage/BookInfoPage.html')"
+                                )
+                        }
+                    }
+                })
+            }
+        }
+        function setTag(rankTitle) {
+            $.ajax({
+                url:"http://127.0.0.1:8080/getBookTagByCategory",
+                data:{"category":rankTitle},
+                success:function (data) {
+                    classification.innerHTML = "<div class=\"classification_content_rankTitle\" >"+rankTitle+"</div>"
+                    for (var i=0;i<data.length;i++){
+                        classification.innerHTML = classification.innerHTML+
+                            "<div class=\"classification_content_tag\" >"+data[i]+"</div>"
+                    }
+                    for (var j=0;j<tags.length;j++){
+                        tags.item(j).onclick = Function
+                        (
+                            "getBooksByTag("+j+");"
+                        )
+                    }
+                    if(data.length===0){
+                        classification.innerHTML = classification.innerHTML+
+                            "<div class=\"classification_content_tag\" >"+"未上架"+"</div>"
+                    }
+                    initBooks()
+                }
+            })
+        }
+    </script>
+    <script type="text/javascript">
+        let navigate_content1=document.getElementById("navigate_content1");
+        let navigate_content2=document.getElementById("navigate_content2");
+        let navigate_content3=document.getElementById("navigate_content3");
+        navigate_content1.onclick=function (){
+            location.href="../LoginPage/Login.html"
+        }
+        navigate_content2.onclick=function (){
+            location.href="../RegisterPage/Register.html"
+        }
+        navigate_content3.onclick=function (){
+            location.href="../UserInfoPage/UserInfo.html"
+        }
+    </script>
+    <script type="text/javascript">
+        var search_text= document.getElementById("search_text")
+        var searchIcon = document.getElementById("searchIcon")
+        search_text.onfocus=function (){
+            search_text.style.width="300px"
+        }
+        search_text.onblur=function (){
+            search_text.style.width="100px"
+        }
+        searchIcon.onclick = function () {
+            window.localStorage.setItem("search_text",search_text.value)
+            window.open('../ResultPage/Result.html')
+        }
+    </script>
+</body>
+</html>

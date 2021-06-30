@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.bookstore.Dao.CommentsDao">
+    <select id="getCommentsByBookId" resultType="BookCommentOfUser" >
+        select commentId,bookId,userinfo.Phone,Name,gender,comment,publishDate,likeNum
+               from comments,userinfo where bookId=#{bookId}
+               and comments.phone = userinfo.Phone
+               order by publishTime desc;
+    </select>
+    <insert id="insertComment">
+        insert into comments values(
+                                    (select MAX(tb.commentId) from comments as tb)+1
+                                    ,#{bookId},#{phone},#{comment},NOW(),NOW(),0);
+    </insert>
+    <insert id="likeComment">
+        replace userlikecomments values(#{bookId},#{phone},#{commentId})
+    </insert>
+    <update id="addCommentLikeNum">
+        update comments set likeNum = likeNum+1 where commentId=#{commentId};
+    </update>
+    <update id="subCommentLikeNum">
+        update comments set likeNum = likeNum-1 where commentId=#{commentId};
+    </update>
+    <delete id="cancelLikeComment">
+        DELETE FROM userlikecomments WHERE commentId=#{commentId} and phone=#{phone} and bookId=#{bookId}
+    </delete>
+    <select id="isLikeComment" resultType="String">
+        SELECT phone from userlikecomments where phone=#{phone} and bookId=#{bookId} and commentId=#{commentId}
+    </select>
+
+    <select id="getPhoneByCommentId" resultType="String">
+        select phone from comments where commentId=#{commentId} and bookId=#{bookId}
+    </select>
+    <delete id="delCommentByPhone">
+        delete from comments where commentId=#{commentId} and phone=#{phone};
+    </delete>
+
+</mapper>

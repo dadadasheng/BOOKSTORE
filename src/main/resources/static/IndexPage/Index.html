@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" type="text/css" href="../IndexPage/Index.css">
+</head>
+<body>
+    <script type="text/javascript" src="../JavaScriptTool/jquery-3.6.0.js"></script>
+    <div id="navigate">
+      <img id="logo" src="img/红灯泡.svg">
+      <img id="title" src="img/明学书城标题logo2.png">
+      <a id="a_register">注册|</a>
+      <a id="a_login">登录|</a>
+      <div id="a_user">个人信息|</div>
+
+        <script type="text/javascript">
+            var a_user = document.getElementById("a_user")
+            a_user.onclick = function (){
+                window.open("../UserInfoPage/UserInfo.html")
+            }
+            var a_login = document.getElementById("a_login")
+            a_login.onclick = function (){
+                location.href = "../LoginPage/Login.html"
+            }
+            var a_register = document.getElementById("a_register")
+            a_register.onclick = function (){
+                location.href = "../RegisterPage/Register.html"
+            }
+        </script>
+    </div>
+    <div id="container">
+      <div id="content1">
+        <div id="bulb">
+            <img id="bulb_img" src="img/暗灯泡.svg">
+            <div id="bulb_light">
+                <div class="light" id="light_1">
+                    <div class="line" id="line1"></div>
+                </div>
+                <div class="light" id="light_2">
+                    <div class="line" id="line2"></div>
+                </div>
+                <div class="light" id="light_3">
+                    <div class="line" id="line3"></div>
+                </div>
+                <div class="light" id="light_4">
+                    <div class="line" id="line4"></div>
+                </div>
+                <div class="light" id="light_5">
+                    <div class="line" id="line5"></div>
+                </div>
+                <div class="light" id="light_6">
+                    <div class="line" id="line6"></div>
+                </div>
+        </div>
+        </div>
+        <h1 id="title1_1">明灯书城</h1>
+        <h1 id="title1_1_shadow">明灯书城</h1>
+        <form id="search_container">
+            <input type="text" id="search_text" placeholder="请输入书名/作者">
+            <input type="button" id="search_btn" value="">
+        </form>
+        <div id="search_line"></div>
+        <script type="text/javascript">
+              var bulb = document.getElementById("bulb_img")
+              var line1 = document.getElementById("line1")
+              var line2 = document.getElementById("line2")
+              var line3 = document.getElementById("line3")
+              var line4 = document.getElementById("line4")
+              var line5 = document.getElementById("line5")
+              var line6 = document.getElementById("line6")
+              var search_text = document.getElementById("search_text")
+              var shadow = document.getElementById("title1_1_shadow")
+              search_text.onfocus =function turnOn(){
+                  bulb.setAttribute("src","img/亮灯泡%20.svg")
+                  shadow.style.opacity = "0.7"
+                  line1.style.justifySelf="left"
+                  line2.style.justifySelf="left"
+                  line3.style.justifySelf="left"
+                  line4.style.justifySelf="left"
+                  line5.style.justifySelf="left"
+                  line6.style.justifySelf="left"
+                  line1.style.opacity = "1"
+                  line2.style.opacity = "1"
+                  line3.style.opacity = "1"
+                  line4.style.opacity = "1"
+                  line5.style.opacity = "1"
+                  line6.style.opacity = "1"
+              }
+              search_text.onblur  = function turnOff(){
+                  bulb.setAttribute("src","img/暗灯泡.svg")
+                  shadow.style.opacity = "0"
+                  line1.style.justifySelf="center"
+                  line2.style.justifySelf="center"
+                  line3.style.justifySelf="center"
+                  line4.style.justifySelf="center"
+                  line5.style.justifySelf="center"
+                  line6.style.justifySelf="center"
+                  line1.style.opacity = "0"
+                  line2.style.opacity = "0"
+                  line3.style.opacity = "0"
+                  line4.style.opacity = "0"
+                  line5.style.opacity = "0"
+                  line6.style.opacity = "0"
+              }
+          </script>
+        <script type="text/javascript">
+            var search_text= document.getElementById("search_text")
+            var search_btn = document.getElementById("search_btn")
+
+                search_btn.onclick = function () {
+                    window.localStorage.setItem("search_text",search_text.value)
+                    window.open('../ResultPage/Result.html')
+                }
+
+        </script>
+      </div>
+      <div id="content2">
+          <h4 id="hot_tag_btn">热门标签</h4>
+          <img id="green_icon" src="img/绿icon_侧边栏锁进弹出.svg">
+      </div>
+      <div id="content3">
+          <h4 id="newBook_title">新书速递</h4>
+          <div id="content3_1">
+                <div class="book">
+                    <img class="bookImage">
+                    <h5 class="bookName">书名</h5>
+                    <h6 class="author">作者</h6>
+                </div>
+              <div class="book">
+                  <img class="bookImage" >
+                  <h5 class="bookName">书名</h5>
+                  <h6 class="author">作者</h6>
+              </div>
+              <div class="book">
+                  <img class="bookImage" >
+                  <h5 class="bookName">书名</h5>
+                  <h6 class="author">作者</h6>
+              </div>
+              <div class="book">
+                  <img class="bookImage" >
+                  <h5 class="bookName">书名</h5>
+                  <h6 class="author">作者</h6>
+              </div>
+              <div class="book">
+                  <img class="bookImage" >
+                  <h5 class="bookName">书名</h5>
+                  <h6 class="author">作者</h6>
+              </div>
+          </div>
+          <script type="text/javascript">
+            var books = document.getElementsByClassName("book")
+            var bookName = document.getElementsByClassName("bookName")
+            var author = document.getElementsByClassName("author")
+            var bookImage = document.getElementsByClassName("bookImage")
+            var bookId=new Array(5);
+            $.ajax({
+                url:"http://127.0.0.1:8080/showNewBook",
+                type:"get",
+                headers: {token:localStorage.token},
+                dataType:"json",
+                success: function(data) {
+                    if(data!=null){
+                        for (var i=0;i<data.length;i++) {
+                            bookName.item(i).innerHTML = data[i]['bookName']
+                            author.item(i).innerHTML = data[i]['author']
+                            bookImage.item(i).setAttribute("src","data:image/png;base64,"+data[i]['picture'])
+                            books.item(i).value = data[i]['bookId']
+                            books.item(i).onclick =
+                                Function(
+                                    "window.localStorage.setItem('BookId',books.item("+i+").value);"+
+                                    "window.open('../BookInfoPage/BookInfoPage.html')"
+                                )
+                        }
+
+                    }else {
+                        alert("请骚等")
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert(" error")
+                }
+            })
+          </script>
+      </div>
+      <div id="content4">
+          <h4 id="book_intro_title">图书资讯</h4>
+          <div class="book_intro" id="book_intro4">
+              <img class="book_intro4Image" id="book_intro_img4" >
+              <ul id="book_intro_container4">
+                  <li class="book_intro4Name" id="book_intro_name4">书名</li>
+                  <li class="book_intro4Author" id="book_intro_author4">作者</li>
+                  <li class="book_intro4Intro" id="book_intro_text4">介绍</li>
+              </ul>
+          </div>
+          <div class="book_intro" id="book_intro3">
+              <img class="book_intro4Image" id="book_intro_img3" >
+              <ul id="book_intro_container3">
+                  <li class="book_intro4Name" id="book_intro_name3">书名</li>
+                  <li class="book_intro4Author" id="book_intro_author3">作者</li>
+                  <li class="book_intro4Intro" id="book_intro_text3">介绍</li>
+              </ul>
+          </div>
+          <div class="book_intro" id="book_intro2">
+              <img class="book_intro4Image" id="book_intro_img2" >
+              <ul id="book_intro_container2">
+                  <li class="book_intro4Name" id="book_intro_name2">书名</li>
+                  <li class="book_intro4Author" id="book_intro_author2">作者</li>
+                  <li class="book_intro4Intro" id="book_intro_text2">介绍</li>
+              </ul>
+          </div>
+          <div class="book_intro" id="book_intro1">
+              <img class="book_intro4Image" id="book_intro_img1" >
+              <ul id="book_intro_container1">
+                  <li class="book_intro4Name" id="book_intro_name1">书名</li>
+                  <li class="book_intro4Author" id="book_intro_author1">作者</li>
+                  <li class="book_intro4Intro" id="book_intro_text1">介绍</li>
+              </ul>
+          </div>
+          <div id="slideshow">
+            <div id="btn_container">
+                <div id="btn1"></div>
+                <div id="btn2"></div>
+                <div id="btn3"></div>
+                <div id="btn4"></div>
+                <div id="btn5"></div>
+                <div id="btn6"></div>
+            </div>
+          </div>
+          <script type="text/javascript">
+              var btn1 = document.getElementById("btn1")
+              var btn2 = document.getElementById("btn2")
+              var btn3 = document.getElementById("btn3")
+              var btn4 = document.getElementById("btn4")
+              var btn5 = document.getElementById("btn5")
+              var btn6 = document.getElementById("btn6")
+              var book_intro1 = document.getElementById("book_intro1")
+              var book_intro2 = document.getElementById("book_intro2")
+              var book_intro3 = document.getElementById("book_intro3")
+              var book_intro4 = document.getElementById("book_intro4")
+              var book_intro_container1 = document.getElementById("book_intro_container1")
+              var book_intro_container2 = document.getElementById("book_intro_container2")
+              var book_intro_container3 = document.getElementById("book_intro_container3")
+              var book_intro_container4 = document.getElementById("book_intro_container4")
+              var book_intro4Name = document.getElementsByClassName("book_intro4Name")
+              var book_intro4Intro = document.getElementsByClassName("book_intro4Intro")
+              var book_intro4Author = document.getElementsByClassName("book_intro4Author")
+              var book_intro4Image = document.getElementsByClassName("book_intro4Image")
+              var book_intro = document.getElementsByClassName("book_intro")
+              $.ajax({
+                  url:"http://127.0.0.1:8080/show4Books",
+                  type:"get",
+                  dataType:"json",
+                  success: function(data) {
+                      console.log(data);
+                      if(data!=null){
+                          for (var i=0;i<data.length;i++) {
+                              book_intro4Name.item(i).innerHTML = data[i]['bookName']
+                              book_intro4Author.item(i).innerHTML = data[i]['author']
+                              book_intro4Intro.item(i).innerHTML = data[i]['introduction']
+                              book_intro4Image.item(i).setAttribute("src","data:image/png;base64,"+data[i]['picture'])
+                              book_intro.item(i).value = data[i]['bookId']
+                              book_intro.item(i).onclick = Function(
+                                  "window.localStorage.setItem('BookId',book_intro.item("+i+").value);"+
+                                  "window.open('../BookInfoPage/BookInfoPage.html')")
+                          }
+                      }else {
+                          alert("请骚等")
+                      }
+                  },
+                  error: function(XMLHttpRequest, textStatus, errorThrown) {
+                      alert(" error")
+                  }
+              })
+              book_intro2.style.transform = "translateX(-100%)"
+              book_intro3.style.transform = "translateX(-100%)"
+              book_intro4.style.transform = "translateX(100%)"
+              var pageIndex = 1
+              btn1.onclick = function left(){
+                  pageIndex = (pageIndex+2)%4 + 1
+                  book_intro1.style.transitionDuration = "0s"
+                  book_intro2.style.transitionDuration = "0s"
+                  book_intro3.style.transitionDuration = "0s"
+                  book_intro4.style.transitionDuration = "0s"
+                  book_intro1.style.transform = "translateX(100%)"
+                  book_intro2.style.transform = "translateX(100%)"
+                  book_intro3.style.transform = "translateX(100%)"
+                  book_intro4.style.transform = "translateX(100%)"
+                  switch (pageIndex){
+                      case 1: {
+                          btn3.style.backgroundImage = "url(\"img/灯关.svg\")";
+                          btn2.style.backgroundImage = "url(\"img/灯开.svg\")";
+                          book_intro1.style.transitionDuration = "0.5s"
+                          book_intro2.style.transitionDuration = "0.5s"
+                          book_intro1.style.transform = "translateX(0)"
+                          book_intro2.style.transform = "translateX(-100%)"
+                          break;
+                      }
+                      case 2: {
+                          btn4.style.backgroundImage = "url(\"img/灯关.svg\")";
+                          btn3.style.backgroundImage = "url(\"img/灯开 (1).svg\")";
+                          book_intro2.style.transitionDuration = "0.5s"
+                          book_intro3.style.transitionDuration = "0.5s"
+                          book_intro2.style.transform = "translateX(0)"
+                          book_intro3.style.transform = "translateX(-100%)"
+                          break;
+                      }
+                      case 3: {
+                          btn5.style.backgroundImage = "url(\"img/灯关.svg\")";
+                          btn4.style.backgroundImage = "url(\"img/灯开 (2).svg\")";
+                          book_intro3.style.transitionDuration = "0.5s"
+                          book_intro4.style.transitionDuration = "0.5s"
+                          book_intro3.style.transform = "translateX(0)"
+                          book_intro4.style.transform = "translateX(-100%)"
+                          break;
+                      }
+                      case 4: {
+                          btn2.style.backgroundImage = "url(\"img/灯关.svg\")";
+                          btn5.style.backgroundImage = "url(\"img/灯开 (3).svg\")";
+                          book_intro4.style.transitionDuration = "0.5s"
+                          book_intro1.style.transitionDuration = "0.5s"
+                          book_intro1.style.transform = "translateX(-100%)"
+                          book_intro4.style.transform = "translateX(0)"
+                          break;
+                      }
+                      default:break;
+                  }
+
+              }
+              btn6.onclick = function right(){
+
+                  pageIndex = pageIndex%4 + 1
+                  book_intro1.style.transitionDuration = "0s"
+                  book_intro2.style.transitionDuration = "0s"
+                  book_intro3.style.transitionDuration = "0s"
+                  book_intro4.style.transitionDuration = "0s"
+                  book_intro1.style.transform = "translateX(-100%)"
+                  book_intro2.style.transform = "translateX(-100%)"
+                  book_intro3.style.transform = "translateX(-100%)"
+                  book_intro4.style.transform = "translateX(-100%)"
+                  switch (pageIndex){
+                      case 1: {
+                          btn5.style.backgroundImage = "url(\"img/灯关.svg\")";
+                          btn2.style.backgroundImage = "url(\"img/灯开.svg\")";
+                          book_intro1.style.transitionDuration = "0.5s"
+                          book_intro4.style.transitionDuration = "0.5s"
+                          book_intro4.style.transform = "translateX(100%)"
+                          book_intro1.style.transform = "translateX(0)"
+
+                          break;
+                      }
+                      case 2: {
+                          btn2.style.backgroundImage = "url(\"img/灯关.svg\")";
+                          btn3.style.backgroundImage = "url(\"img/灯开 (1).svg\")";
+                           book_intro2.style.transitionDuration = "0.5s"
+                           book_intro1.style.transitionDuration = "0.5s"
+                           book_intro2.style.transform = "translateX(0)"
+                           book_intro1.style.transform = "translateX(100%)"
+                          break;
+                      }
+                      case 3: {
+                          btn3.style.backgroundImage = "url(\"img/灯关.svg\")";
+                          btn4.style.backgroundImage = "url(\"img/灯开 (2).svg\")";
+                          book_intro3.style.transitionDuration = "0.5s"
+                          book_intro2.style.transitionDuration = "0.5s"
+                          book_intro3.style.transform = "translateX(0)"
+                          book_intro2.style.transform = "translateX(100%)"
+                          break;
+                      }
+                      case 4: {
+                          btn4.style.backgroundImage = "url(\"img/灯关.svg\")";
+                          btn5.style.backgroundImage = "url(\"img/灯开 (3).svg\")";
+                          book_intro4.style.transitionDuration = "0.5s"
+                          book_intro3.style.transitionDuration = "0.5s"
+                          book_intro4.style.transform = "translateX(0)"
+                          book_intro3.style.transform = "translateX(100%)"
+                          break;
+                      }
+                      default:break;
+                  }
+
+              }
+
+          </script>
+      </div>
+      <div id="content5">
+          <h4 id="sort_tag_btn">分类榜单</h4>
+          <img id="green_icon2" src="img/绿icon_侧边栏锁进弹出.svg">
+      </div>
+      <div id="content6">
+          <h4 id="rank_title">热门排行榜Top3</h4>
+          <div id="content6_1">
+              <div id="content6_1_1">
+                  <h4 class="rankTitle" id="rankTitle1"></h4>
+                  <div class="rankBook1" id="book6_1_1_1">
+                      <img class="rankBookImg" id="rankBookImg1_1" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro1-1">
+                      </ul>
+                  </div>
+                  <div class="rankBook2" id="book6_1_1_2">
+                      <img class="rankBookImg" id="rankBookImg1_2" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro1_2">
+
+                      </ul>
+                  </div>
+                  <div class="rankBook3" id="book6_1_1_3">
+                      <img class="rankBookImg" id="rankBookImg1_3" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro1_3">
+
+                      </ul>
+                  </div>
+              </div>
+              <div  id="content6_1_2">
+                  <h4 class="rankTitle" id="rankTitle2"></h4>
+                  <div class="rankBook1" id="book6_1_2_1">
+                      <img class="rankBookImg" id="rankBookImg2_1" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro2_1">
+
+                      </ul>
+                  </div>
+                  <div class="rankBook2" id="book6_1_2_2">
+                      <img class="rankBookImg" id="rankBookImg2_2" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro2_2">
+
+                      </ul>
+                  </div>
+                  <div class="rankBook3" id="book6_1_2_3">
+                      <img class="rankBookImg" id="rankBookImg2_3" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro2_3">
+
+                      </ul>
+                  </div>
+              </div>
+              <div id="content6_1_3">
+                  <h4 class="rankTitle" id="rankTitle3"></h4>
+                  <div class="rankBook1" id="book6_1_3_1">
+                      <img class="rankBookImg" id="rankBookImg3_1" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro3_1">
+
+                      </ul>
+                  </div>
+                  <div class="rankBook2" id="book6_1_3_2">
+                      <img class="rankBookImg" id="rankBookImg3_2" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro3_2">
+
+                      </ul>
+                  </div>
+                  <div class="rankBook3" id="book6_1_3_3">
+                      <img class="rankBookImg"  id="rankBookImg3_3" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro3_3">
+
+                      </ul>
+                  </div>
+              </div>
+              <div id="content6_1_4">
+                  <h4 class="rankTitle" id="rankTitle4"></h4>
+                  <div class="rankBook1" id="book6_1_4_1">
+                      <img class="rankBookImg" id="rankBookImg4_1" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro4_1">
+
+                      </ul>
+                  </div>
+                  <div class="rankBook2" id="book6_1_4_2">
+                      <img class="rankBookImg" id="rankBookImg4_2" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro4_2">
+
+                      </ul>
+                  </div>
+                  <div class="rankBook3" id="book6_1_4_3">
+                      <img class="rankBookImg"  id="rankBookImg4_3" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro4_3">
+
+                      </ul>
+                  </div>
+              </div>
+              <div id="content6_1_5">
+                  <h4 class="rankTitle" id="rankTitle5"></h4>
+                  <div class="rankBook1" id="book6_1_5_1">
+                      <img class="rankBookImg" id="rankBookImg5_1" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro5_1">
+
+                      </ul>
+                  </div>
+                  <div class="rankBook2" id="book6_1_5_2">
+                      <img class="rankBookImg" id="rankBookImg5_2" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro5_2">
+
+                      </ul>
+                  </div>
+                  <div class="rankBook3" id="book6_1_5_3">
+                      <img class="rankBookImg" id="rankBookImg5_3" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro5_3">
+                      </ul>
+                  </div>
+              </div>
+              <div id="content6_1_6">
+                  <h4 class="rankTitle" id="rankTitle6"></h4>
+                  <div class="rankBook1" id="book6_1_6_1">
+                      <img class="rankBookImg" id="rankBookImg6_1" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro6_1">
+
+                      </ul>
+                  </div>
+                  <div class="rankBook2" id="book6_1_6_2">
+                      <img class="rankBookImg" id="rankBookImg6_2" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro6_2">
+                      </ul>
+                  </div>
+                  <div class="rankBook3" id="book6_1_6_3">
+                      <img class="rankBookImg" id="rankBookImg6_3" src="img/经济.jpg">
+                      <ul class="rankBookIntro" id="rankBookIntro6_3">
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="../JavaScriptTool/jquery-3.6.0.js"></script>
+    <script type="text/javascript">
+
+    </script>
+    <div id="tag_container">
+        <div id="tag_content1">
+            <h4 class="tag_title" id="tag1">文学</h4>
+            <div class="tag">小说</div>
+            <div class="tag">随笔</div>
+            <div class="tag">日本文学</div>
+            <div class="tag">更多</div>
+        </div>
+        <div id="tag_content2">
+            <h4 class="tag_title" id="tag2">流行</h4>
+            <div class="tag">漫画</div>
+            <div class="tag">推理</div>
+            <div class="tag">青春</div>
+            <div class="tag">更多</div>
+        </div>
+        <div id="tag_content3">
+            <h4 class="tag_title" id="tag3">文化</h4>
+            <div class="tag">历史</div>
+            <div class="tag">哲学</div>
+            <div class="tag">设计</div>
+            <div class="tag">更多</div>
+        </div>
+        <div  id="tag_content4">
+            <h4  class="tag_title" id="tag4">生活</h4>
+            <div class="tag">旅行</div>
+            <div class="tag">励志</div>
+            <div class="tag">教育</div>
+            <div class="tag">更多</div>
+        </div>
+        <div  id="tag_content5">
+            <h4 class="tag_title" id="tag5">经管</h4>
+            <div class="tag">经济学</div>
+            <div class="tag">管理</div>
+            <div class="tag">金融</div>
+            <div class="tag">更多</div>
+        </div>
+        <div  id="tag_content6">
+            <h4 class="tag_title" id="tag6">科技</h4>
+            <div class="tag">科普</div>
+            <div class="tag">互联网</div>
+            <div class="tag">交互设计</div>
+            <div class="tag">更多</div>
+        </div>
+    </div>
+    <script type="text/javascript" >
+        var hot_tag_btn = document.getElementById("hot_tag_btn")
+        var content2 = document.getElementById("content2")
+        var content3 = document.getElementById("content3")
+        var content4 = document.getElementById("content4")
+        var tag_container = document.getElementById("tag_container")
+        var green_icon = document.getElementById("green_icon")
+        var tag1 = document.getElementById("tag1")
+        var tag2 = document.getElementById("tag2")
+        var tag3 = document.getElementById("tag3")
+        var tag4 = document.getElementById("tag4")
+        var tag5 = document.getElementById("tag5")
+        var tag6 = document.getElementById("tag6")
+        var isOpen = false
+        hot_tag_btn.onclick = function (){
+            if(!isOpen){
+                tag_container.style.marginLeft = "50px"
+                green_icon.style.transform = "rotateZ(180deg)"
+                content2.style.marginLeft = "250px"
+                content3.style.marginLeft = "250px"
+                content4.style.marginLeft = "250px"
+                tag1.style.opacity = "1"
+                tag2.style.opacity = "1"
+                tag3.style.opacity = "1"
+                tag4.style.opacity = "1"
+                tag5.style.opacity = "1"
+                tag6.style.opacity = "1"
+                isOpen = true
+            }else {
+                tag_container.style.marginLeft = "-250px"
+                green_icon.style.transform = "rotateZ(0deg)"
+                content2.style.marginLeft = "0"
+                content3.style.marginLeft = "0"
+                content4.style.marginLeft = "0"
+                tag1.style.opacity = "0"
+                tag2.style.opacity = "0"
+                tag3.style.opacity = "0"
+                tag4.style.opacity = "0"
+                tag5.style.opacity = "0"
+                tag6.style.opacity = "0"
+                isOpen = false
+            }
+
+        }
+    </script>
+    <script type="text/javascript">
+        var tags = document.getElementsByClassName("tag")
+        var OpenTagType = '文学'
+
+        for (var i=0;i<tags.length;i++){
+            if(i<4){
+                tags.item(i).onclick = Function(
+                    "window.localStorage.setItem('OpenTagType','文学');\n" +
+                    "window.localStorage.setItem('OpenTag',tags.item("+i+").innerHTML);\n"+
+                    "                window.open(\"../LabelPage/LabelPage.html\");"
+                )
+            }
+            if(i>=4&&i<8){
+                tags.item(i).onclick = Function(
+                    "window.localStorage.setItem('OpenTagType','流行');\n" +
+                    "window.localStorage.setItem('OpenTag',tags.item("+i+").innerHTML);\n"+
+                    "                window.open(\"../LabelPage/LabelPage.html\");"
+                )
+            }
+            if(i>=8&&i<12){
+                tags.item(i).onclick = Function(
+                    "window.localStorage.setItem('OpenTagType','文化');\n" +
+                    "window.localStorage.setItem('OpenTag',tags.item("+i+").innerHTML);\n"+
+                    "                window.open(\"../LabelPage/LabelPage.html\");"
+                )
+            }
+            if(i>=12&&i<16){
+                tags.item(i).onclick = Function(
+                    "window.localStorage.setItem('OpenTagType','生活');\n" +
+                    "window.localStorage.setItem('OpenTag',tags.item("+i+").innerHTML);\n"+
+                    "                window.open(\"../LabelPage/LabelPage.html\");"
+                )
+            }
+            if(i>=16&&i<20){
+                tags.item(i).onclick = Function(
+                    "window.localStorage.setItem('OpenTagType','经管');\n" +
+                    "window.localStorage.setItem('OpenTag',tags.item("+i+").innerHTML);\n"+
+                    "                window.open(\"../LabelPage/LabelPage.html\");"
+                )
+            }
+            if(i>=20){
+                tags.item(i).onclick = Function(
+                    "window.localStorage.setItem('OpenTagType','科技');\n" +
+                    "window.localStorage.setItem('OpenTag',tags.item("+i+").innerHTML);\n"+
+                    "                window.open(\"../LabelPage/LabelPage.html\");"
+                )
+            }
+        }
+    </script>
+    <div id="sort_container">
+        <div id="sort_content1">
+            <h4 class="rankName" id="sort1">历史榜</h4>
+            <div class="sort">你好</div>
+            <div class="sort">你好</div>
+            <div class="sort">你好</div>
+            <div class="sort">你好</div>
+        </div>
+        <div class="rankName" id="sort_content2">
+            <h4 id="sort2">计算机榜</h4>
+            <div class="sort">编程</div>
+            <div class="sort">网络</div>
+            <div class="sort">系统</div>
+            <div class="sort">更多</div>
+        </div>
+        <div class="rankName" id="sort_content3">
+            <h4 id="sort3">文学榜</h4>
+            <div class="sort">散文</div>
+            <div class="sort">小说</div>
+            <div class="sort">诗歌</div>
+            <div class="sort">更多</div>
+        </div>
+        <div class="rankName" id="sort_content4">
+            <h4 id="sort4">艺术榜</h4>
+            <div class="sort">美术</div>
+            <div class="sort">音乐</div>
+            <div class="sort">乐器</div>
+            <div class="sort">更多</div>
+        </div>
+        <div class="rankName" id="sort_content5">
+            <h4 id="sort5">政治军事榜</h4>
+            <div class="sort">陆军</div>
+            <div class="sort">海事</div>
+            <div class="sort">中国</div>
+            <div class="sort">更多</div>
+        </div>
+        <div class="rankName" id="sort_content6">
+            <h4 id="sort6">科技榜</h4>
+            <div class="sort">手机</div>
+            <div class="sort">电脑</div>
+            <div class="sort">平板</div>
+            <div class="sort">更多</div>
+        </div>
+    </div>
+    <script type="text/javascript" >
+        var sort_tag_btn = document.getElementById("sort_tag_btn")
+        var content5 = document.getElementById("content5")
+        var content6 = document.getElementById("content6")
+        var sort_container = document.getElementById("sort_container")
+        var green_icon2 = document.getElementById("green_icon2")
+        var sort1 = document.getElementById("sort1")
+        var sort2 = document.getElementById("sort2")
+        var sort3 = document.getElementById("sort3")
+        var sort4 = document.getElementById("sort4")
+        var sort5 = document.getElementById("sort5")
+        var sort6 = document.getElementById("sort6")
+        var sort = document.getElementsByClassName("sort")
+        var isOpen = false
+        sort_tag_btn.onclick = function (){
+            if(!isOpen){
+                sort_container.style.marginLeft = "50px"
+                green_icon2.style.transform = "rotateZ(180deg)"
+                content5.style.marginLeft = "250px"
+                content6.style.marginLeft = "250px"
+                sort1.style.opacity = "1"
+                sort2.style.opacity = "1"
+                sort3.style.opacity = "1"
+                sort4.style.opacity = "1"
+                sort5.style.opacity = "1"
+                sort6.style.opacity = "1"
+                isOpen = true
+            }else {
+                sort_container.style.marginLeft = "-250px"
+                green_icon2.style.transform = "rotateZ(0deg)"
+                content5.style.marginLeft = "0"
+                content6.style.marginLeft = "0"
+                sort1.style.opacity = "0"
+                sort2.style.opacity = "0"
+                sort3.style.opacity = "0"
+                sort4.style.opacity = "0"
+                sort5.style.opacity = "0"
+                sort6.style.opacity = "0"
+                isOpen = false
+            }
+
+        }
+    </script>
+    <script type="text/javascript">
+        var rankBookImg= document.getElementsByClassName('rankBookImg')
+        var rankBookIntro = document.getElementsByClassName('rankBookIntro')
+        var rankTitle = document.getElementsByClassName('rankTitle')
+        $.ajax({
+            url:"http://127.0.0.1:8080/showHotRankBooks",
+            dataType:"json",
+            success:function (data){
+
+               for (var i=0;i<data.length;i++){
+                   rankBookImg.item(i).setAttribute("src","data:image/png;base64,"+data[i]['picture'])
+                   rankBookIntro.item(i).innerHTML =
+                       "<li>书名：" +data[i]['bookName']+ "</li>\n" +
+                       "<li>作者：" +data[i]['author']+ "</li>\n"
+                   rankBookImg.item(i).value = data[i]['bookId']
+                   rankBookImg.item(i).onclick =
+                       Function(
+                           "window.localStorage.setItem('BookId',rankBookImg.item("+i+").value);"+
+                           "window.open('../BookInfoPage/BookInfoPage.html')"
+                       )
+                   rankBookIntro.item(i).onclick =
+                       Function(
+                           "window.localStorage.setItem('BookId',rankBookImg.item("+i+").value);"+
+                           "window.open('../BookInfoPage/BookInfoPage.html')"
+                       )
+
+               }
+                rankTitle[0].innerHTML = data[0]['tag']
+                rankTitle[1].innerHTML = data[3]['tag']
+                rankTitle[2].innerHTML = data[6]['tag']
+                rankTitle[3].innerHTML = data[9]['tag']
+                rankTitle[4].innerHTML = data[12]['tag']
+                rankTitle[5].innerHTML = data[15]['tag']
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown)
+            {
+                alert("内容获取失败")
+            }
+        })
+    </script>
+    <div id="footer"></div>
+</body>
+</html>

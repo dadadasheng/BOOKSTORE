@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索结果</title>
+    <link rel="stylesheet" type="text/css" href="Result.css">
+</head>
+<body>
+    <div id="navigate">
+      <img id="logo" src="img/红灯泡.svg">
+      <img id="title" src="img/明学书城标题logo2.png">
+      <a id="a_login">登录|</a>
+      <a id="a_register">注册|</a>
+      <a id="a_user">个人信息|</a>
+        <script type="text/javascript">
+            var a_user = document.getElementById("a_user")
+            a_user.onclick = function (){
+                window.open("../UserInfoPage/UserInfo.html")
+            }
+            var a_login = document.getElementById("a_login")
+            a_login.onclick = function (){
+                location.href = "../LoginPage/Login.html"
+            }
+            var a_register = document.getElementById("a_register")
+            a_register.onclick = function (){
+                location.href = "../RegisterPage/Register.html"
+            }
+        </script>
+    </div>
+    <div id="container">
+      <div id="content1">
+        <div id="bulb">
+            <img id="bulb_img" src="img/暗灯泡.svg">
+            <div id="bulb_light">
+                <div class="light" id="light_1">
+                    <div class="line" id="line1"></div>
+                </div>
+                <div class="light" id="light_2">
+                    <div class="line" id="line2"></div>
+                </div>
+                <div class="light" id="light_3">
+                    <div class="line" id="line3"></div>
+                </div>
+                <div class="light" id="light_4">
+                    <div class="line" id="line4"></div>
+                </div>
+                <div class="light" id="light_5">
+                    <div class="line" id="line5"></div>
+                </div>
+                <div class="light" id="light_6">
+                    <div class="line" id="line6"></div>
+                </div>
+        </div>
+
+        </div>
+        <h1 id="title1_1">明灯书城</h1>
+        <h1 id="title1_1_shadow">明灯书城</h1>
+        <form id="search_container">
+            <input type="text" id="search_text">
+            <input type="button" id="search_btn" value="">
+        </form>
+        <div id="search_line">
+        </div>
+      </div>
+        <div id="content2">
+        </div>
+    </div>
+    <script type="text/javascript" src="../JavaScriptTool/jquery-3.6.0.js"></script>
+    <script type="text/javascript">
+        var bulb = document.getElementById("bulb_img")
+        var line1 = document.getElementById("line1")
+        var line2 = document.getElementById("line2")
+        var line3 = document.getElementById("line3")
+        var line4 = document.getElementById("line4")
+        var line5 = document.getElementById("line5")
+        var line6 = document.getElementById("line6")
+        var search_text = document.getElementById("search_text")
+        var shadow = document.getElementById("title1_1_shadow")
+        search_text.onfocus =function turnOn(){
+            bulb.setAttribute("src","img/亮灯泡%20.svg")
+            shadow.style.opacity = "0.7"
+            line1.style.justifySelf="left"
+            line2.style.justifySelf="left"
+            line3.style.justifySelf="left"
+            line4.style.justifySelf="left"
+            line5.style.justifySelf="left"
+            line6.style.justifySelf="left"
+            line1.style.opacity = "1"
+            line2.style.opacity = "1"
+            line3.style.opacity = "1"
+            line4.style.opacity = "1"
+            line5.style.opacity = "1"
+            line6.style.opacity = "1"
+        }
+        search_text.onblur  = function turnOff(){
+            bulb.setAttribute("src","img/暗灯泡.svg")
+            shadow.style.opacity = "0"
+            line1.style.justifySelf="center"
+            line2.style.justifySelf="center"
+            line3.style.justifySelf="center"
+            line4.style.justifySelf="center"
+            line5.style.justifySelf="center"
+            line6.style.justifySelf="center"
+            line1.style.opacity = "0"
+            line2.style.opacity = "0"
+            line3.style.opacity = "0"
+            line4.style.opacity = "0"
+            line5.style.opacity = "0"
+            line6.style.opacity = "0"
+        }
+        var search_btn = document.getElementById("search_btn")
+        var search_container = document.getElementById("search_container")
+        var content2= document.getElementById("content2")
+        var books_content = document.getElementsByClassName('books_content')
+        search_text.value = window.localStorage.getItem("search_text")
+        $.ajax({
+            url:"http://127.0.0.1:8080/searchBooksByText",
+            data: {"text":window.localStorage.getItem("search_text")},
+            success:function (data){
+                content2.innerHTML=""
+                for (var i=0;i<data.length;i++) {
+                    content2.innerHTML = content2.innerHTML + "<div  class=\"books_content\">\n" +
+                        "                <div class=\"number\">" + (i + 1) + "</div>\n" +
+                        "                <img class=\"imageBook\" src=" +
+                        "data:image/png;base64," + data[i]['picture'] +
+                        ">\n" +
+                        "                <div class=\"books_content_Info\">\n" +
+                        "                    <h2>" + data[i]['name'] + "</h2>\n" +
+                        "                    <div class=\"writer\">" + data[i]['author'] + "</div>\n" +
+                        "                    <div class=\"introduction\">\n" +
+                        "                        <p>\n" +
+                        data[i]['introduction'] +
+                        "                        </p>\n" +
+                        "                    </div>\n" +
+                        "                </div>\n" +
+                        "            </div>"
+
+
+                    if(data.length===0){
+                        content2.innerHTML ="<img id=\"nullImage\" src=\"img/空空如也.svg\">"
+                    }
+                }
+                for (i=0;i<books_content.length;i++){
+                    books_content.item(i).value = data[i]['bookId']
+                    books_content.item(i).onclick =
+                        Function(
+                            "window.localStorage.setItem('BookId',books_content.item("+i+").value);" +
+                            "window.open('../BookInfoPage/BookInfoPage.html')"
+                        )
+                }
+
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown)
+            {
+                alert("内容获取失败")
+            }
+        })
+        window.localStorage.setItem("search_text",'')
+
+        search_btn.onclick = function () {
+            $.ajax({
+                url:"http://127.0.0.1:8080/searchBooksByText",
+                data: {"text":search_text.value},
+                success:function (data){
+                    content2.innerHTML=""
+                    for (var i=0;i<data.length;i++){
+                        content2.innerHTML=content2.innerHTML+"<div  class=\"books_content\">\n" +
+                            "                <div class=\"number\">"+(i+1)+"</div>\n" +
+                            "                <img class=\"imageBook\" src=" +
+                            "data:image/png;base64,"+data[i]['picture'] +
+                            ">\n" +
+                            "                <div class=\"books_content_Info\">\n" +
+                            "                    <h2>"+data[i]['name']+"</h2>\n" +
+                            "                    <div class=\"writer\">"+data[i]['author']+"</div>\n" +
+                            "                    <div class=\"introduction\">\n" +
+                            "                        <p>\n" +
+                                                        data[i]['introduction']+
+                            "                        </p>\n" +
+                            "                    </div>\n" +
+                            "                </div>\n" +
+                            "            </div>";
+
+
+
+                    if(data.length===0){
+                        content2.innerHTML ="<img id=\"nullImage\" src=\"img/空空如也.svg\">"
+                    }
+                }
+                    for (var j=0;j<books_content.length;j++){
+                        books_content.item(j).value = data[j]['bookId']
+                        books_content.item(j).onclick =
+                            Function(
+                                "window.localStorage.setItem('BookId',books_content.item("+j+").value);" +
+                                "window.open('../BookInfoPage/BookInfoPage.html')"
+                            )
+                    }
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown)
+                {
+                    alert("内容获取失败")
+                }
+            })
+        }
+    </script>
+    <div id="footer"></div>
+</body>
+</html>

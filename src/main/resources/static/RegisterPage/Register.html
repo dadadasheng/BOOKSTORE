@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="Register.css" >
+</head>
+<body>
+<div class="bg-img">
+    <div class="content">
+        <header>注册</header>
+        <form id="register_form">
+            <div class="field">
+                    <span class="fa fa-user">
+                        <img class="fa-user" src="../img/user.svg">
+                    </span>
+                <input type="text" required placeholder="Email or Phone" name="phone">
+            </div>
+            <div class="field space">
+                    <span class="fa fa-lock">
+                        <img class="fa-lock" src="../img/lock.svg">
+                    </span>
+                <input type="password" class="password" required placeholder="password" name="password">
+                <span class="show">SHOW</span>
+            </div>
+            <div class="field space">
+                <span>
+                    <img src="../img/nickname.svg">
+                </span>
+                <input type="text" required placeholder="Nickname" name="name">
+            </div>
+            <div class="field space">
+                <span>
+                    <img src="../img/gender.svg">
+                </span>
+                <input id="man" type="radio" checked="checked" name="gender" VALUE="男" ><span class="sex">男</span>
+                <input id="woman" type="radio" name="gender" value="女"><span class="sex">女</span>
+            </div>
+
+            <div class="field space">
+                <input id="register_btn" type="button" value="REGISTER">
+            </div>
+            <div class="signup">Registered successfully!
+                <a href="../LoginPage/Login.html" target="_self">Login Now</a>
+            </div>
+            <script>
+                const pass_field=document.querySelector('.password');
+                const show_btn=document.querySelector('.show');
+                show_btn.addEventListener('click',function(){
+                    if(pass_field.type==="password"){
+                        pass_field.type="text";
+                        show_btn.style.color="#3498db";
+                        show_btn.textContent="HIDE";
+                    }else {
+                        pass_field.type="password";
+                        show_btn.style.color="#222"
+                        show_btn.textContent="SHOW";
+                    }
+                })
+            </script>
+            <script type="text/javascript" src="../JavaScriptTool/jquery-3.6.0.js"></script>
+            <script type="text/javascript">
+                $('#register_btn').click(function (){
+                    $.ajax({
+                        url:"http://127.0.0.1:8080/register",
+                        type:"post",
+                        data: $('#register_form').serialize(),
+                        success: function(data) {
+                            alert("注册成功")
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            alert(" error")
+                        },
+                    })
+                })
+            </script>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

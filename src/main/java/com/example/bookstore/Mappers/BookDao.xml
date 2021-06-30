@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.bookstore.Dao.BookDao">
+        <select id="getBookByName" resultType="Book">
+            select * from book where bookName = #{name}
+        </select>
+    <select id="getBookByNameOrAuthor" resultType="Book">
+        select * from book
+        where bookName = #{text}
+           or author = #{text}
+           or bookName like CONCAT('%',#{text},'%')
+           or author like CONCAT('%',#{text},'%')
+    </select>
+        <select id="getTop5NewBookInfo" resultType="Book">
+            SELECT * FROM book ORDER BY publishTime DESC limit 5
+        </select>
+    <select id="get4BookInfo" resultType="Book">
+        SELECT * FROM book limit 4
+    </select>
+    <select id="getHotRankBooks" resultType="Book">
+        SELECT * from (
+        SELECT * FROM book WHERE tag in
+        (SELECT t.tag FROM (SELECT tag,SUM(likeNum) FROM book
+        GROUP BY tag HAVING count(tag)>=3
+        limit 6) as t )
+        ) as a where
+        (SELECT count(tag) FROM book
+        as b
+        where a.tag = b.tag and b.likeNum&gt;=a.likeNum)&lt;=3
+        ORDER BY a.tag,a.likeNum DESC
+    </select>
+    <select id="getBookById" resultType="Book">
+        select * from book where bookId=#{bookId}
+    </select>
+
+    <select id="getBookTagByCategory" resultType="String">
+        select distinct tag from book where category=#{category}
+    </select>
+    <select id="getBooksByTag" resultType="Book">
+        select * from book where tag=#{tag}
+    </select>
+    <select id="getRecommendBookById" resultType="Book">
+        select * from book where author=(select author from book where bookId=#{bookId})
+                              or tag=(select tag from book where bookId=#{bookId})
+                              or category=(select category from book where bookId=#{bookId})
+                              limit 4;
+    </select>
+    <update id="addLikeNumById">
+        update book set likeNum = likeNum+1 where bookId=#{bookId}
+    </update>
+    <update id="subLikeNumById">
+        update book set likeNum = likeNum-1 where bookId=#{bookId}
+    </update>
+    <insert id="insLikeNum">
+        replace into userlikebooks values(#{phone},#{bookId})
+    </insert>
+    <delete id="delLikeNum">
+        delete  from userlikebooks where bookId=#{bookId} and phone=#{phone}
+    </delete>
+    <select id="getLike" resultType="String">
+        select phone from userlikebooks where bookId=#{bookId} and phone=#{phone}
+    </select>
+
+</mapper>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人页面</title>
+    <link href="UserInfo.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <script type="text/javascript" src="../JavaScriptTool/jquery-3.6.0.js"></script>
+    <div id="navigate">
+        <img id="logo" src="img/红灯泡.svg">
+        <img id="title" src="img/明学书城标题logo2.png">
+    </div>
+    <div id="container">
+        <div id="UserInfoContainer">
+            <div id="btn_container">
+                <div id="UserImage"></div>
+                <div id="AccountInfo" class="btn">
+                    <h6>账号信息</h6>
+                </div>
+                <div id="Reading" class="btn">
+                    <h6>图书收藏</h6>
+                </div>
+                <div id="Book" class="btn">
+                    <h6>密码修改</h6>
+                </div>
+                <div id="Info" class="btn">
+                    <h6>信息修改</h6>
+                </div>
+            </div>
+            <div id="Content">
+                <div id="content1">
+                    <h1 id="nickname">被呛的鱼</h1>
+                    <h3 id="words">不断探索着自然与非自然的交集</h3>
+                    <ul>
+                        <li id="phone">性别：</li>
+                        <li id="gender">手机号：</li>
+                        <li id="age">出生日期：</li>
+                        <li id="birthday">年龄：</li>
+                    </ul>
+                </div>
+                <div id="content2">
+                </div>
+                <div id="content3">
+                    <div id="field6" class="field space">
+                        <span class="fa">
+                            <img src="../img/lock.svg">
+                        </span>
+                        <input id="password1" type="password" class="password" required placeholder="旧密码">
+                        <span id="show1" class="show">SHOW</span>
+                    </div>
+                    <div id="field7" class="field space">
+                        <span class="fa">
+                            <img src="../img/lock.svg">
+                        </span>
+                        <input id="password2" type="password" class="password" required placeholder="新密码">
+                        <span id="show2" class="show">SHOW</span>
+                    </div>
+                    <div id="field8" class="field space">
+                        <input id="passwordSubmit" type="submit" value="保存修改">
+                    </div>
+                </div>
+                <div id="content4">
+                    <div id="field1" class="field space">
+                        <span class="fa">
+                            <img src="../img/nickname.svg">
+                        </span>
+                        <input id="updateNickname" type="text" required placeholder="修改昵称">
+                    </div>
+                    <div id="field2" class="field space">
+                        <span class="fa">
+                            <img src="../img/user.svg">
+                        </span>
+                        <input id="updatePhone" type="text" class="text" required placeholder="修改手机号">
+                    </div>
+                    <div id="field3" class="field space">
+                        <span>
+                            <img src="../img/birthday.svg">
+                        </span>
+                        <input id="updateBirthday" type="date" required placeholder="修改出生日期">
+                    </div>
+                    <div id="field4" class="field space">
+                        <span>
+                            <img src="../img/gender.svg">
+                        </span>
+                        <input id="man" type="radio" name="gender" ><P class="gender">男</P>
+                        <input id="woman" type="radio" name="gender"><P class="gender">女</P>
+                    </div>
+                    <div id="field5" class="field space">
+                        <input id="userInfoSubmit" type="submit" value="保存修改">
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    var AccountInfo = document.getElementById("AccountInfo")
+                    var Reading = document.getElementById("Reading")
+                    var Book = document.getElementById("Book")
+                    var Info = document.getElementById("Info")
+                    var content1 = document.getElementById("content1")
+                    var content2 = document.getElementById("content2")
+                    var content3 = document.getElementById("content3")
+                    var content4 = document.getElementById("content4")
+                    var contentIndex = 1
+                    let password1=document.getElementById("password1");
+                    let password2=document.getElementById("password2");
+                    let show1=document.getElementById("show1");
+                    let show2=document.getElementById("show2");
+                    function openContent(turnToIndex){
+                        switch (turnToIndex){
+                            case 1:{
+                                contentIndex = 1
+                                content1.style.display = "grid"
+                                break;
+                            }
+                            case 2: {
+                                contentIndex =2
+                                content2.style.display = "grid"
+                                break;
+                            }
+                            case 3: {
+                                contentIndex =3
+                                content3.style.display = "grid"
+                                break;
+                            }
+                            case 4: {
+                                contentIndex =4
+                                content4.style.display = "grid"
+                                break;
+                            }
+                            default:break;
+                        }
+                    }
+                    function changeContent(contentIndex,turnToIndex){
+                        switch (contentIndex){
+                            case 1:{
+                                content1.style.display = "none"
+                                openContent(turnToIndex)
+                                break;
+                            }
+                            case 2: {
+                                content2.style.display = "none"
+                                openContent(turnToIndex)
+                                break;
+                            }
+                            case 3: {
+                                content3.style.display = "none"
+                                openContent(turnToIndex)
+                                break;
+                            }
+                            case 4: {
+                                content4.style.display = "none"
+                                openContent(turnToIndex)
+                                break;
+                            }
+                            default:break;
+                        }
+                    }
+                    AccountInfo.onclick=function () {
+                        changeContent(contentIndex,1)
+                        // alert("我是账号信息")
+                    }
+                    var content2_books = document.getElementsByClassName("content2_books")
+                    var content2_books_1 = document.getElementsByClassName("content2_books_1")
+                    var content2_books_2 = document.getElementsByClassName("content2_books_2")
+                    var del_btn = document.getElementsByClassName("del_btn")
+                    function delBookFromBookshelf(bookId) {
+                        $.ajax(
+                            {
+                                url:"http://127.0.0.1:8080/deleteBookFromBookshelf",
+                                data:{
+                                    'token':window.localStorage.getItem('token'),
+                                    'bookId':bookId
+                                },
+                                success:function (){
+                                    alert('删除成功')
+                                }
+                            }
+                        )
+                    }
+                    function showBookshelf() {
+                        content2.innerHTML = ""
+                        $.ajax({
+                            url:"http://127.0.0.1:8080/showBookshelf",
+                            data:{'phone':oldPhone},
+                            success:function (data) {
+                                for (var i=0;i<data.length;i++){
+                                    content2.innerHTML = content2.innerHTML +
+                                        "                    <div  class=\"content2_books\">\n" +
+                                        "                        <img class=\"content2_books_1\" src=" +
+                                        "data:image/png;base64,"+data[i]['picture']+
+                                        ">\n" +
+                                        "                        <div class=\"content2_books_2\">" +
+                                        data[i]['bookName'] +
+                                        "</div>\n" +
+                                        " <img class=\"del_btn\" src=\"img/删除.svg\">"+
+                                        "                    </div>"
+                                }
+                                for (var i=0;i<content2_books.length;i++) {
+                                    content2_books.item(i).onmouseover = Function(
+                                        "del_btn.item("+i+").style.display =\"block\""
+                                    )
+                                    content2_books.item(i).onmouseleave = Function(
+                                        "del_btn.item("+i+").style.display =\"none\""
+                                    )
+                                    content2_books.item(i).value = data[i]['bookId']
+                                    content2_books_1.item(i).onclick = Function(
+                                        "window.localStorage.setItem('BookId',content2_books.item("+i+").value);" +
+                                        "window.open('../BookInfoPage/BookInfoPage.html')"
+                                    )
+                                    content2_books_2.item(i).onclick = Function(
+                                        "window.localStorage.setItem('BookId',content2_books.item("+i+").value);" +
+                                        "window.open('../BookInfoPage/BookInfoPage.html')"
+                                    )
+                                    del_btn.item(i).onclick=Function(
+                                        "delBookFromBookshelf(content2_books.item("+i+").value);"+
+                                        "content2_books.item("+i+").style.display='none';"
+
+                                    )
+                                }
+                            }
+                        })
+                    }
+
+                    Reading.onclick=function () {
+                        changeContent(contentIndex,2)
+                        showBookshelf()
+                    }
+                    Book.onclick=function () {
+                        changeContent(contentIndex,3)
+                        // alert("我是图书收藏")
+                    }
+                    Info.onclick=function () {
+                        changeContent(contentIndex,4)
+                        // alert("我是信息修改")
+                    }
+                    show1.onclick=function (){
+                        if(password1.type==="password"){
+                            password1.type="text";
+                            show1.style.color="#3498db";
+                            show1.textContent="HIDE";
+                        }else {
+                            password1.type="password";
+                            show1.style.color="#222";
+                            show1.textContent="SHOW";
+                        }
+                    }
+                    show2.onclick=function (){
+                        if(password2.type==="password"){
+                            password2.type="text";
+                            show2.style.color="#3498db";
+                            show2.textContent="HIDE";
+                        }else {
+                            password2.type="password";
+                            show2.style.color="#222";
+                            show2.textContent="SHOW";
+                        }
+                    }
+
+                </script>
+            </div>
+        </div>
+
+    </div>
+    <div id="footer"></div>
+    <script type="text/javascript">
+        var phone = document.getElementById("phone")
+        var gender = document.getElementById("gender")
+        var age = document.getElementById("age")
+        var birthday = document.getElementById("birthday")
+        var nickname = document.getElementById("nickname")
+        var updateNickname = document.getElementById("updateNickname")
+        var updatePhone = document.getElementById("updatePhone")
+        var updateBirthday = document.getElementById("updateBirthday")
+        var man = document.getElementById("man")
+        var woman = document.getElementById("woman")
+        var userInfoSubmit = document.getElementById("userInfoSubmit")
+        var passwordSubmit = document.getElementById("passwordSubmit")
+        var passwordOld = document.getElementById("password1")
+        var passwordNew = document.getElementById("password2")
+        var oldPhone;
+        $.ajax({
+            url:"http://127.0.0.1:8080/getUserInfo",
+            type:"post",
+            headers: {token:localStorage.token},
+            dataType:"json",
+            success: function(data) {
+                console.log(data)
+                if(data!=null){
+                    nickname.value=nickname.innerText = data['name']
+                    phone.innerText = "手机号："+data['phone']
+                    gender.innerText = "性别："+data['gender']
+                    age.innerText = "年龄："+data['age']
+                    birthday.innerText = "生日："+data['birthday']
+                    updateNickname.setAttribute('value',data['name'])
+                    updatePhone.setAttribute('value',data['phone'])
+                    updateBirthday.setAttribute('value',data['birthday'])
+                    oldPhone = data['phone']
+                    if (data['gender']==='男'){
+                        man.setAttribute("checked","checked")
+                    }else {
+                        woman.setAttribute("checked","checked")
+                    }
+                }else {
+                    alert("请重新登录")
+                    location.href = "../LoginPage(zhang)/Login.html"
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                // alert(" error")
+            }
+        })
+        userInfoSubmit.onclick = function (){
+            var gender;
+            if (man.checked){
+                gender = "男"
+                alert("男")
+            }else {
+                gender = "女"
+                alert("女")
+            }
+            $.ajax({
+                url:"http://127.0.0.1:8080/updateUserInfo",
+                type:"post",
+                headers: {token:localStorage.token},
+                data:{
+                    'name':updateNickname.value,
+                    'phone':updatePhone.value,
+                    'birthday':updateBirthday.value,
+                    'gender':gender,
+                    'oldPhone':oldPhone
+                },
+                success: function(data) {
+                    alert(data)
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert(" error")
+                }
+            })
+        }
+        passwordSubmit.onclick = function () {
+            $.ajax({
+                url:"http://127.0.0.1:8080/updateUserPassword",
+                type:"post",
+                headers: {token:localStorage.token},
+                data:{
+                    'phone':oldPhone,
+                    'passwordOld':passwordOld.value,
+                    'passwordNew':passwordNew.value,
+                },
+                success: function(data) {
+                    alert(data)
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert(" error")
+                }
+            })
+        }
+
+    </script>
+    <script type="text/javascript">
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.bookstore.Dao.BookshelfDao">
+    <select id="getBooksFromBookshelf" resultType="Book">
+        select book.* from book,bookshelf  where book.bookId
+            in (select bookshelf.bookID from bookshelf
+                where  phone=#{phone} )
+                and book.bookId = bookshelf.bookID
+                ORDER  by addTime desc
+
+    </select>
+    <insert id="insertBookshelf">
+        insert into bookshelf values(#{phone},#{bookId},now())
+    </insert>
+    <select id="selectBookId" resultType="String">
+        select phone from bookshelf where bookId=#{bookId} and phone=#{phone}
+    </select>
+    <delete id="deleteBookFromBookshelf">
+        delete from bookshelf where phone=#{phone} and bookID=#{bookId}
+   </delete>
+    <select id="isInBookshelf" resultType="String">
+        select bookID from bookshelf where bookID=#{bookId} and phone=#{phone}
+    </select>
+</mapper>
